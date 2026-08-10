@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyShield — Find Your Focus</title>
+    
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="logo_transparent.png" alt="StudyShield Logo" class="nav-logo" onerror="this.onerror=null; this.src='logo.png';">
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" onclick="openTab('home')">Home</button>
+            <button class="nav-btn" onclick="openTab('map-tab')">Study Spot Map</button>
+            <button class="nav-btn" onclick="openTab('meter-tab')">Noise Meter</button>
+            
+            <!-- Theme Toggle Button -->
+            <button class="theme-toggle-btn" id="theme-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <div class="content-area">
+        
+        <!-- HOME TAB -->
+        <div id="home" class="tab-panel active">
+            <div class="hero-card">
+                <img src="logo_transparent.png" alt="StudyShield Banner" class="hero-logo" onerror="this.onerror=null; this.src='logo.png';">
+                <h2>Protect Your Study Time</h2>
+                <p class="tagline">"Find your focus. Protect your study time."</p>
+            </div>
+
+            <div class="section-card gradient-border">
+                <h2>About StudyShield</h2>
+                <p><strong>The Problem:</strong> Students often struggle to concentrate due to ambient noise and distractions. Finding a genuinely peaceful environment is critical for retention and productivity.</p>
+                <p><strong>The Solution:</strong> StudyShield is an integrated platform designed to locate, evaluate, and recommend optimal study locations. We combine real-time acoustic analysis with curated geographic data to protect your focus.</p>
+            </div>
+
+            <div class="section-card gradient-border">
+                <h2>Summary of Features</h2>
+                <ul>
+                    <li><strong>Interactive Mapping:</strong> Locate nearby libraries, parks, and quiet zones tailored for studying.</li>
+                    <li><strong>Acoustic Analysis:</strong> Use your device's microphone to calculate environmental noise via Root Mean Square (RMS) evaluation.</li>
+                    <li><strong>Quietness Scoring:</strong> Get standardized metrics to ensure your environment supports deep work.</li>
+                </ul>
+            </div>
+
+            <div class="section-card gradient-border">
+                <h2>Study Recommendations</h2>
+                <ul class="recommendation-list">
+                    <li><span class="dot green-dot"></span><strong>High-Focus Tasks:</strong> Seek Green Zones (Libraries, enclosed study rooms). Target: &lt; 45 dB.</li>
+                    <li><span class="dot orange-dot"></span><strong>Light Reading:</strong> Seek Orange Zones (Quiet cafes, calm parks, schools). Target: 45 - 60 dB.</li>
+                    <li><span class="dot red-dot"></span><strong>Avoid:</strong> Red Zones (Markets, busy transit hubs). Noise exceeds 65 dB.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- STUDY SPOT MAP TAB -->
+        <div id="map-tab" class="tab-panel">
+            <div class="section-card gradient-border">
+                <h2>Pragathi Nagar & Nizampet Study Zones</h2>
+                <p>Find peaceful environments suitable for studying across Pragathi Nagar and Nizampet. Use the search bar to filter spots.</p>
+                
+                <div class="map-search-bar">
+                    <input type="text" id="map-search" placeholder="Search for libraries, schools, parks..." onkeyup="filterMap()">
+                </div>
+
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div class="map-legend">
+                        <div class="legend-item"><div class="color-box green"></div> Quiet (Ideal)</div>
+                        <div class="legend-item"><div class="color-box orange"></div> Moderate (Okay)</div>
+                        <div class="legend-item"><div class="color-box red"></div> Noisy (Avoid)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOISE METER TAB -->
+        <div id="meter-tab" class="tab-panel">
+            <div class="section-card gradient-border">
+                <h2>Live Study Environment Check</h2>
+                <p>Click start to measure ambient sound pressure levels (dB SPL) around you using your microphone.</p>
+                
+                <div class="meter-container">
+                    <div class="meter-label">
+                        <span>SOUND LEVEL</span>
+                        <span id="live-db" style="color: #10b981;">0 dB</span>
+                    </div>
+                    <div class="meter-bar-bg">
+                        <div class="meter-bar-fill" id="meter-fill"></div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-title">Quietness Score</div>
+                        <div class="stat-value" id="quietness-score">--</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-title">Peak Sound</div>
+                        <div class="stat-value" id="peak-db">--</div>
+                    </div>
+                </div>
+
+                <div class="analysis-verdict" id="analysis-verdict">
+                    Status: Waiting to begin analysis.
+                </div>
+
+                <button class="btn" id="start-btn" onclick="toggleAnalysis()">Start Analysis</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- External JS -->
+    <script src="script.js"></script>
+</body>
+</html>
